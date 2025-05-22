@@ -1,4 +1,4 @@
-import processing.sound.*; //<>//
+import processing.sound.*;
 
 
 // colour variables:
@@ -15,7 +15,13 @@ ArrayList<PImage> WBDown;
 ArrayList<PImage> currentAction;
 
 float robinx, robiny, robinw, robinh;
-float Rx, Ry, Rh, Rw;
+
+
+
+//GRAVITY
+float vROBx, vROBy;     //ROBIN's velocity
+float aROBx, aROBy; // acceleration// ROBIN's gravity
+
 //ROI----------------------------------------------------------------------------------------------------------------------------------
 
 PImage roiIdle;
@@ -28,14 +34,20 @@ ArrayList<PImage> WGDown;
 ArrayList<PImage> current_ACT;
 
 float roix, roiy, roiw, roih;
+//GRAVITY
+float vROIx, vROIy;     //ROI's velocity
+float aROIx, aROIy; // acceleration// ROI's gravity
+
 
 //---------------------------------------
 
 
 
+PImage knife;
+boolean knifeOn;
+float knifex, knifey, knifew, knifeh;
 
-
-
+boolean winnerOn = false;
 
 
 
@@ -173,6 +185,7 @@ int i = 0;
 
 
 void setup() {
+  
   imageMode(CENTER);
   size(600, 600);
 
@@ -183,7 +196,20 @@ void setup() {
   healthb = 500;
 
 
-
+//  //knife
+  
+//knifeOn = false;
+//  knifex = 200;
+//  knifey = 200;
+//  knifew = 100;
+//  knifeh = 100;
+  
+//  winnerOn = false;
+  
+//  image(knife, knifex, knifey, 100, 100);
+  
+  
+  
 
 
 
@@ -257,8 +283,8 @@ void setup() {
   //image bunni
   bunni = loadImage("bunny.png");
 
-  bunnix = random(105, 495);
-  bunniy = random(105, 495);
+  bunnix = 400;
+  bunniy = 300;
   bunniw = 130;
   bunnih = 130;
 
@@ -270,9 +296,13 @@ void setup() {
 
 
 
-//ROBIN ------------------------------------------------------------------------------------------------------------------ //<>//
+//ROBIN ------------------------------------------------------------------------------------------------------------------
   robinIdle = loadImage("forward_robin-0.png");
   BOY = new robin();
+    robinx = random(145, 455);
+    robiny = random(145, 455);
+    robinw = 130;
+    robinh = 130;
 
   idle = new   ArrayList<PImage>();
   WBLeft = new   ArrayList<PImage>();
@@ -313,10 +343,21 @@ WBDown.add(loadImage("forward_robin-3.png"));
 currentAction = idle;
 
 
+vROBx = 0;
+vROBy = 0.5;
+
+aROBx = 0;
+aROBy = 1;
+
+
 // ROI -------------------------- ------------------------------------------------------------------------------------------------------------------
 
  roiIdle = loadImage("forward_roi-0.png");
   GIRL = new roi();
+    roix = random(145, 455);
+    roiy = random(145, 455);
+    roiw = 130;
+    roih = 130;
 
   idlee = new   ArrayList<PImage>();
   WGLeft = new   ArrayList<PImage>();
@@ -329,11 +370,11 @@ currentAction = idle;
 idlee.add(loadImage("forward_roi-0.png"));
 
 WGLeft.add(loadImage("left_roi-0.png"));
-WGLeft.add(loadImage("left_roi-0.png"));
-WGLeft.add(loadImage("left_roi-0.png"));
-WGLeft.add(loadImage("left_roi-0.png"));
-WGLeft.add(loadImage("left_roi-0.png"));
-WGLeft.add(loadImage("left_roi-0.png"));
+WGLeft.add(loadImage("left_roi-1.png"));
+WGLeft.add(loadImage("left_roi-2.png"));
+WGLeft.add(loadImage("left_roi-3.png"));
+WGLeft.add(loadImage("left_roi-4.png"));
+WGLeft.add(loadImage("left_roi-5.png"));
 
 WGRight.add(loadImage("right_roi-0.png"));
 WGRight.add(loadImage("right_roi-1.png"));
@@ -350,10 +391,17 @@ WGUp.add(loadImage("back_roi-3.png"));
 
 
 WGDown.add(loadImage("forward_roi-0.png"));
-WGDown.add(loadImage("forward_roi-0.png"));
-WGDown.add(loadImage("forward_roi-0.png"));
-WGDown.add(loadImage("forward_roi-0.png"));
+WGDown.add(loadImage("forward_roi-1.png"));
+WGDown.add(loadImage("forward_roi-2.png"));
+WGDown.add(loadImage("forward_roi-3.png"));
 
+current_ACT = idle;
+
+vROIx = 0;
+vROIy = 0.5;
+
+aROIx = 0;
+aROIy = 1;
 
 //-----------------------------------------------------------------------------------------------------------------
 
@@ -371,8 +419,8 @@ WGDown.add(loadImage("forward_roi-0.png"));
 
   //mewo
   mewo = loadImage("mewo.png");
-  mewox = random(90, 510);
-  mewoy = random(90, 510);
+  mewox = 400;
+  mewoy = 200;
   mewow = 150;
   mewoh = 150;
 
@@ -380,8 +428,8 @@ WGDown.add(loadImage("forward_roi-0.png"));
 
   //apple
   apple = loadImage("apple.png");
-  applex = random(105, 495);
-  appley = random(105, 495);
+  applex = random(150, 450);
+  appley = random(430, 550);
   applew = 100;
   appleh = 100;
 
@@ -470,6 +518,15 @@ void draw() {
 //void mouseReleased(){
 //fail.play();  // likes overlapping use this
 ////fail.stop() // stops the previous one so no echo
+
+
+//void knifeOn(float x, float y ) {
+//  pushMatrix();
+//  translate(x, y);
+//  image(knife, 200, 200, 100, 100);
+//  popMatrix();
+//}
+
 
 void mewoOn (float x, float y) {
   pushMatrix();
