@@ -10,8 +10,8 @@ class roi {
     THRESHOLD = 8;
     count = 0;
  
-    roix = random(105, 495);
-    roiy = random(105, 495);
+    roix = random(145, 455);
+    roiy = random(145, 455);
     roiw = 130;
     roih = 130;
     speed = 4; 
@@ -48,11 +48,11 @@ class roi {
 
   if (wb < 60) {
     fill(255, 172, 70);
-    rect(roix - 38, roiy - 75, wb, 10);
+    rect(roix - 46, roiy - 72, wb, 10);
   }
   if (wb < 30) {
     fill(255, 0, 0);
-    rect(roix - 38, roiy - 75, wb, 10);
+    rect(roix - 46, roiy - 72, wb, 10);
     
      if (healthb == 0) {
     mode = GAMEOVER;
@@ -69,6 +69,7 @@ class roi {
     if (wKey) {
       roiy -= speed;
       current_ACT = WGUp;
+      vROIy = -10;
     }
     
     if (sKey) {
@@ -91,6 +92,3 @@ class roi {
     }
   }
 }
-    
-    
-    
