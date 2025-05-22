@@ -14,10 +14,29 @@ void game() {
   fill(255);
   stroke(brown);
   rect(80, 80, 440, 440);
+  
+  
+  //BOUNDERIES ROBIN
+  if (BOY.robinx < 100) BOY.robinx = 100;
+  if (BOY.robinx > 490) BOY.robinx = 490;
+  if (BOY.robiny < 75) BOY.robiny = 75;
+  if (BOY.robiny > 470) BOY.robiny = 470;
+  //BOUNDERIES ROI
+  if (GIRL.roix < 100) GIRL.roix = 100;
+  if (GIRL.roix > 490) GIRL.roix = 490;
+  if (GIRL.roiy < 75) GIRL.roiy = 75;
+  if (GIRL.roiy > 470) GIRL.roiy = 470;
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
-
-BOY.display();
-GIRL.display();
 
 
 
@@ -27,19 +46,20 @@ GIRL.display();
   //mewo
   image(mewo, mewox, mewoy, 20, 20);
   
-  
+  BOY.display();
+  GIRL.display();
   
  
 ///----------------------------------------------------------
 
 
   // collision
-  if (dist(Rx, Ry, mewox, mewoy) <= 10 + 25) {
+  if (dist(BOY.robinx, BOY.robiny, mewox, mewoy) <= 65 + 10) {
     //basically finding the slope
     mode = MEWO;
   }
 
-  if (dist(roix, roiy, mewox, mewoy) <= 10 + 25) {
+  if (dist(GIRL.roix, GIRL.roiy, mewox, mewoy) <= 65 + 10) {
     mode = MEWO;
   }
 
@@ -47,14 +67,14 @@ GIRL.display();
 
   //apple
   // collision
-  if (dist(Rx, Ry, applex, appley) <= 25 + 25) {
+  if (dist(BOY.robinx, BOY.robiny, applex, appley) <= 65 + 25) {
 
     applex = random(105, 495);
     appley = random(105, 495);
     point = point + 1;
   }
 
-  if (dist(roix, roiy, applex, appley) <= 25 + 25) {
+  if (dist(GIRL.roix, GIRL.roiy, applex, appley) <= 65 + 50) {
 
     applex = random(105, 495);
     appley = random(105, 495);
@@ -74,13 +94,13 @@ GIRL.display();
     image(bunni, bunnix, bunniy, 50, 50);
   }
 
-  if (dist(Rx, Ry, bunnix, bunniy) <= 25 + 25) {
+  if (dist(BOY.robinx, BOY.robiny, bunnix, bunniy) <= 65 + 25) {
     mode = BUNNYFIGHT;
     bunniOn = false;
   }
 
 
-  if (dist(roix, roiy, bunnix, bunniy) <= 25 + 25) {
+  if (dist(GIRL.roix, GIRL.roiy, bunnix, bunniy) <= 65 + 25) {
     mode = BUNNYFIGHT;
     bunniOn = false;
   }
