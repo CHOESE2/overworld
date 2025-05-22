@@ -2,7 +2,6 @@
 
 
 
-
 // carrot blaster
 void fight1Clicks() {
   if (mouseX > 220 && mouseX < 400 + w && mouseY > 350 && mouseY < 400)
@@ -21,14 +20,12 @@ void fight1() {
 
 
 
-
-
   BOY.display();
   GIRL.display();
 
 
 
-  //array
+ //array
 
   if (mode != previousMode) {
     raining = true;
@@ -38,7 +35,7 @@ void fight1() {
 
   if (millis() >= stopTime) {
     raining = false;
-
+    
     strokeWeight(2);
     fill(0);
     stroke(0);
@@ -46,22 +43,24 @@ void fight1() {
     rect(220, 350, 200, 50);
 
     fill(255);
-    text("winner !", 268, 384);
-
+    text("winner !",  268, 384);
+    
     //dead bunny
-    //images/ dead bunny gifs
-    image(DGIF[dead], 300, 250, 125, 125);
-    println(frameCount);
-    if (frameCount % 10 == 0) dead = dead + 1;
-    if (dead == frame) dead = 0;
-
-
-
-
+     //images/ dead bunny gifs
+  image(DGIF[dead], 300, 250, 125, 125);
+  println(frameCount);
+  if (frameCount % 10 == 0) dead = dead + 1;
+  if (dead == frame) dead = 0;
+ 
+    
+    
+    
     stroke(0);
     textSize(30);
     fill(0);
     text("The rain has stopped!", 100, 150);
+    
+  
   }
 
   int i = 0;
@@ -80,7 +79,7 @@ void fight1() {
 
       //acid rain
       // collision
-      if (dist(Rx, Ry, x[i], y[i]) <= 25 + acidRainw + acidRainh) {
+      if (dist(BOY.robinx, BOY.robiny, x[i], y[i]) <= 65 + acidRainw + acidRainh) {
         x[i] = random(0, 600);
         y[i] = random(-500, 0);
         healths = healths - 2;
@@ -93,7 +92,7 @@ void fight1() {
         mode = GAMEOVER;
       }
 
-      if (dist(roix, roiy, x[i], y[i]) <= 25 + acidRainw + acidRainh) {
+      if (dist(GIRL.roix, GIRL.roiy, x[i], y[i]) <= 65 + acidRainw + acidRainh) {
         x[i] = random(0, 600);
         y[i] = random(-500, 0);
         healthb = healthb - 2;
@@ -120,6 +119,9 @@ void fight1() {
 
 
 
+
+
+
 void acidRain(float x, float y) {
   pushMatrix();
   translate(x, y);
@@ -138,3 +140,4 @@ void tac (int x, int y, int w, int h) {
     stroke(255, 0, 0);
   } else stroke(255);
 }
+
