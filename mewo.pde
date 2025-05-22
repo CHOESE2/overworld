@@ -7,110 +7,60 @@ void mewoClicks(){
 void mewo(){
   
   background(255);
-  
-  
-  //platform
-  fill(255);
-  stroke(0);
-  
-  rect(20, 300, 560, 30);
-  fill(0);
-  stroke(0);
-  rect(20, 20, 560, 300);
-  
-  
-  
-   stroke(255);
-  //background
-  fill(255, 0, 0);
-  rect(50, 331, 500, 500); //bloodly lake 
-  
-  fill(0);
-  rect(230, 300, 150, 400); 
-  
-  rect(150, 400, 80, 90);
-  fill(0);
-  
-  triangle(152, 490, 230, 490, 230, 530);
-  
- // mewo's spawn
- fill(255);
- rect(220, 100, 150, 150);
+ 
+ //floor
  fill(0);
- rect(220, 80, 150, 150);
+ rect(0, 550, 600, 100);
+  
+  
+  //velocity + acceleration = gravity
+  //ROBIN
+  BOY.robiny += vROBy;
+  if (BOY.robiny < 550) {
+    vROBy += aROBy;
+  }
+  else {
+    vROBy = 0;
+    BOY.robiny = 550;
+  } 
+  //ROI
+   GIRL.roiy += vROIy;
+  if (GIRL.roiy < 550) {
+    vROIy += aROIy;
+  }
+  else {
+    vROIy = 0;
+    GIRL.roiy = 550;
+  } 
   
   
   
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //  image(fish, fishx, fishy, fishw, fishh);
 BOY.display();
 GIRL.display();
-  
-
- 
-  
-  //bounderies 
-  //road 
-  if (robinx < 230 && robiny > 320) {
-    robinx = 230;
-  }
-  if (robinx > 380 && robiny > 320){
-    robinx = 380;
-  }
-  
-  //platform
-  if (robinx < 20 && robiny < 320){ 
-    robinx = 20;
-  }
-  if(robinx > 580 && robiny < 320){
-    robinx = 580;
-  }
-  if(robiny >  320 && robinx < 230){ //telaportation
-    robiny = 320;
-  }
-  if (robiny > 320 && robinx > 380){ //telaportation
-    robiny = 320;
-  }
-  
-  if (robiny < 20){ //celeing 
-    robiny = 20;
-  }
- 
- 
- 
- 
-
-//bounderies 
-  //road 
-  if (roix < 230 && roiy > 320) {
-    roix = 230;
-  }
-  if (roix > 380 && roiy > 320){
-    roix = 380;
-  }
-  
-  //platform
-  if (roix < 20 && roiy < 320){ 
-    roix = 20;
-  }
-  if(roix > 580 && roiy < 320){
-    roix = 580;
-  }
-  if(roiy >  320 && roix < 230){ //telaportation
-    roiy = 320;
-  }
-  if (roiy > 320 && roix > 380){ //telaportation
-    roiy = 320;
-  }
-  if (roiy < 20){ //celeing 
-    roiy = 20;
-  }
-  
-
-
-
-
-
 
 
 
