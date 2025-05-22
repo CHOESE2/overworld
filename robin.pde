@@ -12,8 +12,8 @@ class robin {
     THRESHOLD = 8;
     count = 0;
  
-    robinx = random(105, 495);
-    robiny = random(105, 495);
+    robinx = random(145, 455);
+    robiny = random(145, 455);
     robinw = 130;
     robinh = 130;
     speed = 4; 
@@ -50,11 +50,11 @@ class robin {
 
   if (w < 60) {
     fill(255, 172, 70);
-    rect(robinx - 38, robiny - 75, w, 10);
+    rect(robinx - 46, robiny - 72, w, 10);
   }
   if (w < 30) {
     fill(255, 0, 0);
-    rect(robinx - 38, robiny - 75, w, 10);
+    rect(robinx - 46, robiny - 72, w, 10);
     
      if (healths == 0) {
     mode = GAMEOVER;
@@ -71,6 +71,8 @@ class robin {
     if (upKey) {
       robiny -= speed;
       currentAction = WBUp;
+      vROBy = -10;
+     
     }
     
     if (downKey) {
@@ -93,6 +95,8 @@ class robin {
     }
   }
 }
+    
+    
     
     
     
