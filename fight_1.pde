@@ -2,14 +2,25 @@
 
 
 
+
 // carrot blaster
 void fight1Clicks() {
+   
   if (mouseX > 220 && mouseX < 400 + w && mouseY > 350 && mouseY < 400)
     mode = GAME;
+    
 }
+//void appleSetup(){
+//  applex = random(150, 450);
+//   appley = random(430, 550);
+//}
 
 void fight1() {
-  background(255);
+  background(0);
+  fill(255);
+  rect(100, 380, 400, 220); 
+  
+  
 
 
   //images/ angry gifs
@@ -22,9 +33,45 @@ void fight1() {
 
   BOY.display();
   GIRL.display();
+  
+   //BOUNDERIES ROBIN
+  if (BOY.robinx < 100) BOY.robinx = 100;
+  if (BOY.robinx > 500) BOY.robinx = 500;
+  if (BOY.robiny < 380) BOY.robiny = 380;
+  if (BOY.robiny > 550) BOY.robiny = 550;
+  //BOUNDERIES ROI
+  if (GIRL.roix < 100) GIRL.roix = 100;
+  if (GIRL.roix > 500) GIRL.roix = 500;
+  if (GIRL.roiy < 380) GIRL.roiy = 380;
+  if (GIRL.roiy > 550) GIRL.roiy = 550;
+  
+  
+  
+  
+  //apple
+   
+  image(apple, applex, appley, applew, appleh);
+  // collision
+  if (dist(BOY.robinx, BOY.robiny, applex, appley) <= 65 + 25) {
 
+    applex = random(150, 450);
+    appley = random(430, 550);
+    healths += 2;
+    w  =  w + 2;
+  }
 
+  if (dist(GIRL.roix, GIRL.roiy, applex, appley) <= 65 + 50) {
 
+    applex = random(150, 450);
+    appley = random(430, 550);
+    healthb += 2;
+    wb = wb + 2;
+  }
+
+  
+  
+  
+  
  //array
 
   if (mode != previousMode) {
@@ -44,6 +91,8 @@ void fight1() {
 
     fill(255);
     text("winner !",  268, 384);
+    //winnerOn = true;
+    //knifeOn = true;
     
     //dead bunny
      //images/ dead bunny gifs
@@ -53,15 +102,23 @@ void fight1() {
   if (dead == frame) dead = 0;
  
     
-    
+ //   if (winnerOn == true) {
+ // knifeOn = true; 
+ //// image(knife, knifex, knifey, knifew, knifeh);
+ // }
     
     stroke(0);
     textSize(30);
     fill(0);
     text("The rain has stopped!", 100, 150);
     
-  
   }
+  
+  
+  //if (knifeOn == true) {
+  //  image(knife, knifex, knifey, knifew, knifeh);
+  //}
+  
 
   int i = 0;
   float speed = 4;
@@ -82,8 +139,8 @@ void fight1() {
       if (dist(BOY.robinx, BOY.robiny, x[i], y[i]) <= 65 + acidRainw + acidRainh) {
         x[i] = random(0, 600);
         y[i] = random(-500, 0);
-        healths = healths - 2;
-        w = w - 2;
+        healths = healths - 3;
+        w = w - 3;
       }
       if (w <= 0) {
         w = 90;
@@ -91,12 +148,14 @@ void fight1() {
         i = i + 1;
         mode = GAMEOVER;
       }
+      
+      
 
       if (dist(GIRL.roix, GIRL.roiy, x[i], y[i]) <= 65 + acidRainw + acidRainh) {
         x[i] = random(0, 600);
         y[i] = random(-500, 0);
-        healthb = healthb - 2;
-        wb = wb -2;
+        healthb = healthb - 3;
+        wb = wb -3;
       }
       if (wb <= 0) {
         w = 90;
@@ -114,9 +173,6 @@ void fight1() {
     }
   }
 }
-
-
-
 
 
 
@@ -140,4 +196,3 @@ void tac (int x, int y, int w, int h) {
     stroke(255, 0, 0);
   } else stroke(255);
 }
-
