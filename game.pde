@@ -1,7 +1,6 @@
 
 
 void gameClicks() {
-  mode = PAUSE;
   
 }
 
@@ -14,6 +13,10 @@ void game() {
   fill(255);
   stroke(brown);
   rect(80, 80, 440, 440);
+  
+  
+
+
   
   
   //BOUNDERIES ROBIN
@@ -41,10 +44,14 @@ void game() {
 
 
   //iamges
+ 
   image(bunni, bunnix, bunniy, 50, 50);
   image(apple, applex, appley, applew, appleh);
   //mewo
   image(mewo, mewox, mewoy, 20, 20);
+  
+ 
+  //image(knife, knifex, knifey, 100, 100);
   
   BOY.display();
   GIRL.display();
@@ -53,55 +60,114 @@ void game() {
 ///----------------------------------------------------------
 
 
-  // collision
-  if (dist(BOY.robinx, BOY.robiny, mewox, mewoy) <= 65 + 10) {
-    //basically finding the slope
-    mode = MEWO;
+
+
+ if (winnerOn == true) {
+  knifeOn = true; 
+ // image(knife, knifex, knifey, knifew, knifeh);
   }
-
-  if (dist(GIRL.roix, GIRL.roiy, mewox, mewoy) <= 65 + 10) {
-    mode = MEWO;
-  }
+  
 
 
 
-  //apple
-  // collision
-  if (dist(BOY.robinx, BOY.robiny, applex, appley) <= 65 + 25) {
-
-    applex = random(105, 495);
-    appley = random(105, 495);
-    point = point + 1;
-  }
-
-  if (dist(GIRL.roix, GIRL.roiy, applex, appley) <= 65 + 50) {
-
-    applex = random(105, 495);
-    appley = random(105, 495);
-    point2 = point2 + 1;
-  }
 
 
+//  // collision
+//  if (dist(BOY.robinx, BOY.robiny, mewox, mewoy) <= 65 + 10) {
+//    //basically finding the slope
+//    mode = MEWO;
+//  }
 
-  //bunni collision
-  if (!bunniOn && random(100) < 1) {
-    bunnix = random(105, 495);
-    bunniy = random(105, 495);
-    bunniOn = true;
-  }
+//  if (dist(GIRL.roix, GIRL.roiy, mewox, mewoy) <= 65 + 10) {
+//    mode = MEWO;
+//  }
+  
+  
+//  if (BOY.robinx > 100 && BOY.robinx < 100 && BOY.robiny > 100 && BOY.robiny < 200){
+//    stroke(0);
+//    fill(255, 0, 0);
+//    rect(100, 300, 50, 40);
+//  }
+  
+  ////knife
+  // if (dist(BOY.robinx, BOY.robiny, knifex, knifey) <= BOY.robinw/2 + 25 && point > 10) { 
+  // point -=10;
+  //}
+  
+  //if (winnerOn == true){
+  //  knifeOn = true;
 
-  if (bunniOn) {
-    image(bunni, bunnix, bunniy, 50, 50);
-  }
-
-  if (dist(BOY.robinx, BOY.robiny, bunnix, bunniy) <= 65 + 25) {
-    mode = BUNNYFIGHT;
-    bunniOn = false;
-  }
+  //}
 
 
-  if (dist(GIRL.roix, GIRL.roiy, bunnix, bunniy) <= 65 + 25) {
-    mode = BUNNYFIGHT;
-    bunniOn = false;
-  }
+
+//  //if (dist(GIRL.roix, GIRL.roiy, knifex, knifey) <= GIRL.roiw/2 + 25 && point2 > 10) {
+//  // knifeOn = true;
+//  // point2 -= 10;
+//  //}
+
+
+
+//  //apple
+//  // collision
+//  if (dist(BOY.robinx, BOY.robiny, applex, appley) <= 65 + 25) {
+
+//    applex = random(105, 495);
+//    appley = random(105, 495);
+//    point = point + 1;
+//  }
+
+//  if (dist(GIRL.roix, GIRL.roiy, applex, appley) <= 65 + 50) {
+
+//    applex = random(105, 495);
+//    appley = random(105, 495);
+//    point2 = point2 + 1;
+//  }
+
+
+
+//  //bunni collision
+//  if (!bunniOn && random(100) < 1) {
+//    bunnix = random(105, 495);
+//    bunniy = random(105, 495);
+//    bunniOn = true;
+//  }
+
+//  if (bunniOn) {
+//    image(bunni, bunnix, bunniy, 50, 50);
+//  }
+
+//  if (dist(BOY.robinx, BOY.robiny, bunnix, bunniy) <= 65 + 25) {
+//    mode = BUNNYFIGHT;
+//    bunniOn = false;
+//  }
+
+
+//  if (dist(GIRL.roix, GIRL.roiy, bunnix, bunniy) <= 65 + 25) {
+//    mode = BUNNYFIGHT;
+//    bunniOn = false;
+//  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 }
+
+
+ 
