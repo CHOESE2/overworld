@@ -1,4 +1,4 @@
-import processing.sound.*;
+//import processing.sound.*;
 
 
 // colour variables:
@@ -19,6 +19,7 @@ int ammoB;
 boolean SHOOTB;
 float [] ABX;
 float [] ABY;
+float dnx, dny; //distance 
 
 boolean eKey;
 
@@ -389,12 +390,21 @@ WBDown.add(loadImage("forward_robin-3.png"));
 
 currentAction = idle;
 
-
+//mewo's stuff
 vROBx = 0;
 vROBy = 0.5;
 
 aROBx = 0;
 aROBy = 1;
+
+
+//distance
+dny = BOY.robiny - mewoy;
+dnx = BOY. robinx - mewox;
+
+
+
+
 
 
 // ROI -------------------------- ------------------------------------------------------------------------------------------------------------------
@@ -458,12 +468,6 @@ aROIy = 1;
 
 
 
-
-
-
-
-
-
   //mewo
   mewo = loadImage("mewo.png");
   mewox = 400;
@@ -519,9 +523,6 @@ aROIy = 1;
   point = 0;
   point2 = 0;
 }
-
-
-
 
 
 
