@@ -26,6 +26,7 @@ void bunny(){
 
   textSize(30);
   fill(0);
+  
   text("you know, i didn't wanna fight you", 100, 100);
   text("but u stomped on my face", 100, 150);
   
