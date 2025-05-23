@@ -16,11 +16,15 @@ void keyPressed() {
   
   //shop
   if (key == 't') tKey = true;
-  if (tKey) mode = GAME;
+  if (tKey) mode = FIGHT1;
   
   //mode
-  if (key == 'x') xKey = true; 
+  if (key == 'x' ||key == 'X') xKey = true; 
   if (xKey) mode = MEWO;
+  
+  //AMMOB
+  if (key == 'e' || key == 'E') eKey = true;
+
   
   //pause
   
@@ -46,6 +50,8 @@ void keyReleased() {
   //stats
   if (key == 'c') cKey = false;
   
+    //AMMOB
+  if (key == 'e' || key == 'E') eKey = false;
   
   //pause
   if (key == 't') tKey = false;
