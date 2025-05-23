@@ -15,6 +15,12 @@ ArrayList<PImage> WBDown;
 ArrayList<PImage> currentAction;
 
 float robinx, robiny, robinw, robinh;
+int ammoB;
+boolean SHOOTB;
+float [] ABX;
+float [] ABY;
+
+boolean eKey;
 
 
 
@@ -37,6 +43,11 @@ float roix, roiy, roiw, roih;
 //GRAVITY
 float vROIx, vROIy;     //ROI's velocity
 float aROIx, aROIy; // acceleration// ROI's gravity
+
+int ammoG;
+boolean SHOOTG;
+float [] AGX;
+float [] AGY;
 
 
 //---------------------------------------
@@ -131,6 +142,8 @@ int n;
 int stopTime;
 boolean raining = true;
 int previousMode = -1;
+
+
 
 
 
@@ -249,6 +262,40 @@ void setup() {
   }
 
 
+
+//bullets
+ammoB += 5;
+SHOOTB = false;
+ammoG = 0;
+SHOOTG = false;
+
+ABX = new float [ammoB];
+ABY = new float [ammoB];
+
+AGX = new float [ammoG];
+AGY = new float [ammoG];
+
+for ( i = 0; i < ammoB; i++ ) {
+  ABX [i] = (BOY.robinx);
+  ABY [i] = (BOY.robiny);
+}
+
+for ( i = 0; i < ammoG; i++ ) {
+  AGX [i] = (GIRL. roix);
+  AGY [i] = (GIRL.roiy);
+}
+
+
+
+if (mode == MEWO) {
+    raining = true;
+  }
+
+
+
+
+
+
   //set up array of rain drops
   n = 20;
   x = new float [n];
@@ -260,7 +307,7 @@ void setup() {
   }
 
 
-  if (mode == GAME) {
+  if (mode == FIGHT1) {
     raining = true;
     stopTime = millis() + 30000;
   }
@@ -273,8 +320,8 @@ void setup() {
   //image fish
   fish= loadImage("fish.png");
 
-  fishx = random(130, 550);
-  fishy = random(130, 550);
+  fishx = 150;
+  fishy = 180;
   fishw = 100;
   fishh = 100;
 
@@ -429,7 +476,7 @@ aROIy = 1;
   //apple
   apple = loadImage("apple.png");
   applex = random(150, 450);
-  appley = random(430, 550);
+  appley = random(430, 540);
   applew = 100;
   appleh = 100;
 
@@ -451,11 +498,11 @@ aROIy = 1;
 
 
   //mewo's velocity [ the speed at which the ball is moving is a certain direction ]
-  vx = 6;
+  vx = 0;
   vy = 6;
   //mewo's acceleration [ the change in the velocity of the ball ]
-  ax = 0;
-  ay = 6;
+  ax = 4;
+  ay = 4;
 
 
 
