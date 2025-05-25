@@ -50,12 +50,18 @@ void fight1() {
   
   //apple
    
-  image(apple, applex, appley, applew, appleh);
+   if (mode == FIGHT1 && random(0, 400) < 1 && !appleOn){
+   appleOn = true;
+   }
+   if(appleOn == true){
+    image(apple, applex, appley, applew, appleh);
+   }
   // collision
   if (dist(BOY.robinx, BOY.robiny, applex, appley) <= 65 + 25) {
 
     applex = random(150, 450);
     appley = random(430, 550);
+    appleOn = false;
     healths += 2;
     w  =  w + 2;
   }
@@ -64,9 +70,11 @@ void fight1() {
 
     applex = random(150, 450);
     appley = random(430, 550);
+    appleOn = false;
     healthb += 2;
     wb = wb + 2;
   }
+   
 
   
   
@@ -91,8 +99,7 @@ void fight1() {
 
     fill(255);
     text("winner !",  268, 384);
-    //winnerOn = true;
-    //knifeOn = true;
+    winnerOn = true;
     
     //dead bunny
      //images/ dead bunny gifs
@@ -102,36 +109,61 @@ void fight1() {
   if (dead == frame) dead = 0;
  
     
- //   if (winnerOn == true) {
- // knifeOn = true; 
- //// image(knife, knifex, knifey, knifew, knifeh);
- // }
-    
     stroke(0);
     textSize(30);
     fill(0);
     text("The rain has stopped!", 100, 150);
-    
+  
+
   }
-  
-  
-  //if (knifeOn == true) {
-  //  image(knife, knifex, knifey, knifew, knifeh);
-  //}
-  
 
   int i = 0;
   float speed = 4;
 
 
   if (raining) {
+  
+    
+if (!knifeSpawned && !knifeOn && random(0, 5) < 1) {
+    knifex = random(0, 600);
+    knifey = random(-500, 0);
+    knifeOn = true;
+    
+ }
+ if (knifeOn == true){
+   image(knife, knifex, knifey, knifew, knifeh);
+   knifey += speed;
+ }
+ if (knifey > 600){
+  
+    knifex = random(0, 600);
+    knifey = random(-500, 0);
+     knifeSpawned = true;
+ }
+ 
+ if(dist(GIRL.roix, GIRL.roiy, knifex, knifey) < GIRL.roiw/2 + 50) {
+  knifeOn = false;
+ knifeSpawned = true;
+ knifeCO = true;
+ } if (knifeCO == true && knifeSpawned == true) {
+   stroke(0);
+   fill(255);
+   text("knife collected !! ", 300, 100) ;
+ }
+ 
+    
+    
+    
+    
+    
+    
+    
 
 
     while (i < n) {
       acidRain(x[i], y[i]);   // draw the rain
       y[i] += speed;
-
-
+    
 
 
       //acid rain
@@ -173,6 +205,9 @@ void fight1() {
     }
   }
 }
+
+
+
 
 
 
