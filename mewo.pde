@@ -5,9 +5,6 @@ void mewoClicks() {
 void mewo() {
 
   background(255);
-  //distance
-  dny = BOY.robiny - mewoy;
-  dnx = BOY. robinx - mewox;
 
 
   //BOUNDERIES ROBIN-----------------------------------------------------------
@@ -34,7 +31,7 @@ void mewo() {
   if (GIRL.roiy > 550) GIRL.roiy = 550;
 
   //platform
-  if (GIRL.roiy < 370 && GIRL.roiy > 320 && GIRL.roix > 380 && GIRL.roix < 530) {
+  if (GIRL.roiy < 370 && GIRL.roiy > 320 && GIRL.roix > 200 && GIRL.roix < 500) { //right
     GIRL.roiy = 320;
     vROIy = 0;
   }
@@ -51,12 +48,13 @@ void mewo() {
 
 
 
+
   //floor
   fill(0);
   rect(0, 550, 600, 100);
 
   //platforms
-  rect(380, 350, 150, 20); //right
+  rect(200, 350, 300, 20); //right
   rect(80, 220, 150, 20);
 
 
@@ -88,11 +86,14 @@ void mewo() {
   BOY.display();
   GIRL.display();
 
+  BUG.display();
 
 
 
 
-  // mewo----------------------------------------------------------------------------------------------------
+
+
+  //// mewo----------------------------------------------------------------------------------------------------
 
   strokeWeight(5);
   stroke(0);
@@ -137,35 +138,60 @@ void mewo() {
   // }
   //}
 
-  //-------------------------------------------------------------------------------------------------------------------------------
+
+  //health
+  stroke(0);
+  strokeWeight(2);
+  fill(255);
+  rect(10, 10, 580, 20);
+  fill(0, 255, 0);
+  rect(10, 10, MH, 20);
+
+   if (MH < 390) {
+    fill(255, 172, 70);
+    rect(10, 10, MH, 20);
+  }
+  if (MH < 195) {
+    fill(255, 0, 0);
+    rect(10, 10, MH, 20);
+  }
+  if (MH <= 0) {
+    mewoDEAD = true;
+    strokeWeight(2);
+    fill(0);
+    stroke(0);
+    ta(300, 100, 200, 50);
+    rect(300, 100, 200, 50);
+    textSize(30);
+    fill(255);
+    text("winner !",  350, 135);
+    
+  }
+    
+
+
+
+
+
+
+  ////-------------------------------------------------------------------------------------------------------------------------------
 
 
 
   //bullets
 
+  //distance
+  dny = mewoy - BOY.robiny;
+  dnx = mewox - BOY.robinx;
+
   float speed = 4;
   int i = 0;
   SHOOTB = true;
-  int shotB = 0;
-
-
-
-  ABX = new float [ammoB];
-  ABY = new float [ammoB];
-
-  AGX = new float [ammoG];
-  AGY = new float [ammoG];
+  //shotB = 0;
   //-----------------------------
 
-  for ( i = 0; i < ammoB; i++ ) {
-    ABX [i] = (BOY.robinx);
-    ABY [i] = (BOY.robiny);
-  } //shoot the amount of bullets you have
+  //shoot the amount of bullets you have
 
-  for ( i = 0; i < ammoG; i ++ ) {
-    AGX [i] = (GIRL.roix);
-    AGY [i] = (GIRL.roiy);
-  }
 
   if (mode == MEWO) {
     raining = true;
@@ -176,174 +202,185 @@ void mewo() {
     previousMode = mode;
   }
 
+  //ROBIN-----------------------------------------------------------------------------------------------------
 
-  //ROBIN-------------------------------------------
-  if (raining) {
+  //fish
+  // collision
+
+  if (dist(BOY.robinx, BOY.robiny, fishx, fishy) <= BOY.robinw/2 + 50) {
+
+    fishx = random(130, 550);
+    fishy = random(130, 550);
+    w += 5;
+    ammoB += 1;
+  
+    // shotB = 0;
 
 
-    if (ammoB > 0) {
-      for (i = 0; i < ammoB; i++) {
-        acidRain(ABX[i], ABY[i]);
-        acidRain(ABX[shotB], ABY[shotB]);
-        ABY[i] += speed - dny + dnx;
-      }
+    ABX = new float[ammoB];
+    ABY = new float[ammoB];
+    ABdx = new float[ammoB];
+    ABdy = new float[ammoB];
+    ABfired = new boolean[ammoB];
+
+
+
+    for (i = 0; i < ammoB; i++) {
+      ABX[i] = BOY.robinx;
+      ABY[i] = BOY.robiny;
+      ABdx[i] = 0;
+      ABdy[i] = 0;
+
+      ABfired[i] = false;
     }
+  }
 
 
-    //fish
-    // collision
 
-    if (dist(BOY.robinx, BOY.robiny, fishx, fishy) <= BOY.robinw/2 + 50) {
+  for (i = 0; i < ammoB; i++) {
+    if (ABfired[i]) {
+      ABX[i] += ABdx[i];
+      ABY[i] += ABdy[i];
 
-      fishx = random(130, 550);
-      fishy = random(130, 550);
-      ammoB += 5;
+      acidRain(ABX[i], ABY[i]);
 
-
-      ABX = new float[ammoB];
-      ABY = new float[ammoB];
-
-      for (i = 0; i < ammoB; i++) {
+      if (ABY[i] > height || ABY[i] < 0 || ABX[i] < 0 || ABX[i] > width) {
         ABX[i] = BOY.robinx;
         ABY[i] = BOY.robiny;
+        ABdx[i] = 0;
+        ABdy[i] = 0;
+        ABfired[i] = false;
+      }
+
+      if (dist(mewox, mewoy, ABX[i], ABY[i]) <= 75 + acidRainw + acidRainh) {
+        MH -= 0.1;
+      }
+        
+        if ( SPdead == false && MH <= 20) {
+          MH = 20;
+        }
+        if (SPdead == true && dist(mewox, mewoy, ABX[i], ABY[i]) <= 75 + acidRainw + acidRainh){
+          MH -= 0.1;
+        
       }
     }
+  }
 
 
-    //SHOOTING BULLETS
+
+  //SHOOTING BULLETS
 
 
-    if (SHOOTB == false) {
-      ABX [shotB] = (BOY.robinx);
-      ABY [shotB] = (BOY.robiny);
-    }
-    if (eKey && ammoB > 5) {
-      SHOOTB = true;
+  if (mKey && ammoB > 0) {
+    SHOOTB = true;
+    dnx = mewox - BOY.robinx;
+    dny = mewoy - BOY.robiny;
 
-      //dny = mewoy - BOY.robiny;
-      //dnx = mewox - BOY. robinx;
+    float mag = sqrt(dnx * dnx + dny * dny);
+    if (mag != 0) {
+      dnx /= mag;
+      dny /= mag;
+      //new position
 
-      ABX [shotB] = (dnx);
-      ABY [shotB] = (dny);
+      ABX[shotB] = BOY.robinx;
+      ABY[shotB] = BOY.robiny;
+      ABdx[shotB] = dnx * 10;
+      ABdy[shotB] = dny * 10;
+
+      ABfired[shotB] = true;
       shotB = (shotB + 1) % ammoB;
     }
-
-
-
-
-    if (ABY[shotB] > height) {
-      ABX[i] = (BOY.robinx);
-      ABY[i] = (BOY.robiny);
-    }
-    i = i + 1;
   }
-  while (i < ammoB) {
-    acidRain(ABX[i], ABY[i]);   // draw the rain
+  //---- mewo collisions----------------------------------------------------------------------------------
 
-    //acid rain
-    // collision
-    if (dist(mewox, mewoy, ABX[shotB], ABY[shotB]) <= 75 + acidRainw + acidRainh) {
-      healths -= 3;
-    }
-    // healths = healths - 3;
-    // w = w - 3;
-    //}
-    //if (w <= 0) {
-    //  w = 90;
-    //  wb = 90;
-    //  i = i + 1;
-    //  mode = GAMEOVER;
-    //}
+
+  // collision
+  if (dist(BOY.robinx, BOY.robiny, mewox, mewoy) <= 65 + 75 && !mewoDEAD) {
+    healths = healths - 1;
+    w = w - 1;
+  }
+  if (w <= 0) {
+    w = 90;
+    wb = 90;
+    mode = GAMEOVER;
   }
 
-  //------------------------------------------------------
+  if (dist(GIRL.roix, GIRL.roiy, mewox, mewoy) <= 65 + 75 && !mewoDEAD) {
+    healthb = healthb - 1;
+    wb = wb - 1;
+  }
+  if (wb <= 0) {
+    w = 90;
+    wb = 90;
+    mode = GAMEOVER;
+  }
+  
+  //----spider-------------------------------------
 
-  //    while (i < ammoG) {
-  //    acidRain(AGX[i], AGY[i]);   // draw the rain
-  //    AGY[i] += speed;
-
-  //    //acid rain
-  //    // collision
-  //    if (dist(mewox, mewoy, AGX[i], AGY[i]) <= 75 + acidRainw + acidRainh) {
-  //      AGX [i] = (GIRL.roix);
-  //      AGY [i] = (GIRL.roiy);
-  //    }
-  //    //  healthb = healthb - 3;
-  //    //  wb = wb -3;
-  //    //}
-  //    //if (wb <= 0) {
-  //    //  w = 90;
-  //    //  wb = 90;
-  //    //  i = i + 1;
-  //    //  mode = GAMEOVER;
-  //    //}
-
-
-  //    if (AGY[i] > height) {
-  //      AGX[i] = (GIRL.roix);
-  //      AGY[i] = (GIRL.roiy);
-  //    }
-  //    i = i + 1;
-  //  }
-  //}
-
-
-
-
-
-  //----------------------------------------------------------------------------------------------------------------------------------
-  //--------------------------------------------
-
-
-
-  // // collision
-  // if (dist(BOY.robinx, BOY.robiny, mewox, mewoy) <= 65 + 75) {
-  //    healths = healths - 1;
-  //    w = w - 1;
-  // } if (w <= 0){
-  //   w = 90;
-  //   wb = 90;
-  //   mode = GAMEOVER;
-  // }
-
-  // if (dist(GIRL.roix, GIRL.roiy, mewox, mewoy) <= 65 + 75) {
-  //healthb = healthb - 1;
-  //    wb = wb - 1;
-  // } if (wb <= 0){
-  //   w = 90;
-  //   wb = 90;
-  //   mode = GAMEOVER;
-  // }
-
-
-
-
-
-
-
-
-
-
-
-  //if (dist(GIRL.roix, GIRL.roiy, fishx, fishy) <= GIRL.roiw/2 + 50) {
-
-  //  fishx = random(130, 550);
-  //  fishy = random(130, 550);
-  //  ammoG += 5;
-
-  //}
-
-
-
-
-
-
-
-
-
-  //void fish (int x, int y){
-  //  pushMatrix();
-  //  translate(x, y);
-  //  image(fish, fishx, fishy, fishw, fishh);
-  //  popMatrix();
+if (dist(GIRL.roix, GIRL.roiy, spx- 5, spy) <= 65 + 5 && SH > 0) {
+  wb -= 1;
+ if (wb <= 0) {
+  w = 90;
+  wb = 90;
+ mode = GAMEOVER;
+ }
 }
+
+
+if (dist(GIRL.roix, GIRL.roiy, fishx, fishy) <= GIRL.roiw/2 + 50) {
+    fishx = random(130, 550);
+    fishy = random(130, 550);
+    wb += 5;
+ }
+  
+
+if (dist(GIRL.roix, GIRL.roiy, spx, spy) <= 65 + 100 && eKey) {
+ SH -= 5;
+if (SH <= 0){
+  SPdead = true;
+  current_SACT = idleS;
+  SH = 0;
+  
+ 
+
+}
+}
+if (SH == 0){
+   stroke(0);
+  fill(255, 0, 0);
+  textSize(20);
+  
+    text("you killed your pet spider...", 300, 400);
+}
+
+
+
+
+
+ if (eKey && !knifeOn){
+    knifeOn = true;
+ }
+  if (knifeOn && eKey && current_ACT == WGRight){
+    image(knife, GIRL.roix + 15, GIRL.roiy + 10, knifew, knifeh);
+    
+  }
+    
+   if (knifeOn && eKey && current_ACT == WGLeft){
+    image(knifeL, GIRL.roix - 15, GIRL.roiy + 10, knifew, knifeh);
+  } 
+}
+
+void ta (int x, int y, int w, int h) {
+  if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
+    stroke(255, 0, 0);
+  } else stroke(255);
+}
+
+
+
+
+
+
+
+
+
